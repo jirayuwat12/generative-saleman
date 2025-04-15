@@ -1,13 +1,26 @@
+import os
+
+from dotenv import load_dotenv
 from mcp.server.fastmcp import FastMCP
+from supabase import Client, create_client
+
+# Load environment variables from .env file
+load_dotenv(os.path.join(os.path.dirname(__file__), ".env"), override=True)
+
+# Initialize Supabase client
+url: str = os.getenv("SUPABASE_URL")
+key: str = os.getenv("SUPABASE_KEY")
+supabase: Client = create_client(url, key)
 
 # Create a FastMCP object
-mcp = FastMCP(name="generative-saleman-product-info")
+mcp = FastMCP(
+    name="generative-saleman-product-info",
+    dependencies=["supabase", "dotenv"],
+    description="A tool to get product price.",
+    version="0.0.1",
+)
 
-# Create constants
-PRODUCT_NAME_TO_PRICE = {"apple": 55.0, "banana": 5.0, "orange": 35.0, "grape": 45.0, "watermelon": 25.0}
 
-
-# Add get product price tool
 @mcp.tool()
 def get_product_price(product_name: str) -> float | None:
     """
@@ -26,9 +39,35 @@ def get_product_price(product_name: str) -> float | None:
     > get_product_price('no-product')
     None
     """
-    if product_name not in PRODUCT_NAME_TO_PRICE:
+    # Query the product price from the database
+    response = supabase.table("products").select("price").eq("name", product_name).execute()
+    if response.data:
+        return response.data[0]["price"]
+    else:
         return None
-    return PRODUCT_NAME_TO_PRICE[product_name]
+
+@mcp.tool()
+def is_selling_product(product_name: str) -> bool:
+    """
+    Check if the given product name is selling in the system.
+    :param product_name: The name of the product.
+    :type product_name: str
+
+    :return: True if the product is selling, False otherwise.
+    :rtype: bool
+
+    ## Example
+    > is_selling_product('apple')
+    True
+    > is_selling_product('banana')
+    True
+    > is_selling_product('no-product')
+    False
+    """
+    # Query the product price from the database
+    response = supabase.table("products").select("price").eq("name", product_name).execute()
+
+    return len(response.data) > 0
 
 
 if __name__ == "__main__":
