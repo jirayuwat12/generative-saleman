@@ -1,9 +1,10 @@
+import argparse
 import asyncio
 import os
-import yaml
-import argparse
+
 import nest_asyncio
 import streamlit as st
+import yaml
 from mcp_openai import MCPClient, config
 
 nest_asyncio.apply()
