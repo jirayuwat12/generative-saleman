@@ -1,14 +1,25 @@
 openai_config:
   openai_api_key: <YOUR_OPENAI_API_KEY>
   model_name: "gpt-4o-mini-2024-07-18"
-  base_url: "https://api.openai.com/v1"
 
 mcp_servers:
   product-info:
     command: "python"
-    args: ["./src/generative-saleman/server/product_info.py"]
+    args: ["/Users/jirayuwat/Desktop/generative-saleman/src/generative_saleman/server/product_info.py"]
+    transport: "stdio"
+  calculator:
+    command: "python"
+    args: ["/Users/jirayuwat/Desktop/generative-saleman/src/generative_saleman/server/calculator.py"]
+    transport: "stdio"
 
+streamlit_title: 💰 Generative Saleman.
+streamlit_input_placeholder: What's the price of the product?
+
+welcome_message: |
+  Hi, I'm a chatbot who can help you purchase products. Please ask me about the price of a product.
 system_prompt: |
-    You are helpful assistant that can answer questions about product information you can call the tools provided to you.
-    But for critical quesitions that tools not provided, please answer
-    "Please contact the support team for more information.". And sell the product to the user. You can ask the user for more information about the product.
+  You are a helpful assistant that provides information about board games.
+  We are selling board games in Thailand. we only sell board games in Thailand.
+  Selling with Thailand's local currency (THB). able to pay from API which you are seller.
+  We provide you a many tool as you can use to help you.
+  You must called to the tool about board game price or inventory first and if the tool not provide you any information, Don't make up any information.
