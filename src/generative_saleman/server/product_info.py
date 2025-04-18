@@ -20,11 +20,34 @@ mcp = FastMCP(
     version="0.0.1",
 )
 
+@mcp.resource("supabase:/available_products")
+def get_available_products() -> list[str]:
+    """
+    Get the available products from the database.
+    Note: Available products are the product names in the database which has `amount` > 0.
+    :return: A list of available products.
+    :rtype: list[str]
+
+    ## Example
+    > get_available_products()
+    ['apple', 'banana', 'orange']
+    """
+    # Query the product names from the database
+    response = supabase.table("products")\
+        .select("name")\
+        .gt("amount", 0)\
+        .execute()
+    if response.data:
+        return [product["name"] for product in response.data]
+    else:
+        return []
+
 
 @mcp.tool()
 def get_product_price(product_name: str) -> float | None:
     """
-    Get the price of the given product name and the function will return None if the system is not selling the product.
+    Get the price of the given product name and the function will return None if there is no such product in the database.
+
     :param product_name: The name of the product.
     :type product_name: str
 
@@ -40,11 +63,15 @@ def get_product_price(product_name: str) -> float | None:
     None
     """
     # Query the product price from the database
-    response = supabase.table("products").select("price").eq("name", product_name).execute()
+    response = supabase.table("products")\
+        .select("price")\
+        .eq("name", product_name)\
+        .execute()
     if response.data:
         return response.data[0]["price"]
     else:
         return None
+
 
 @mcp.tool()
 def is_selling_product(product_name: str) -> bool:
@@ -65,7 +92,11 @@ def is_selling_product(product_name: str) -> bool:
     False
     """
     # Query the product price from the database
-    response = supabase.table("products").select("price").eq("name", product_name).execute()
+    response = supabase.table("products")\
+        .select("price")\
+        .eq("name", product_name)\
+        .gt("amount", 0)\
+        .execute()
 
     return len(response.data) > 0
 

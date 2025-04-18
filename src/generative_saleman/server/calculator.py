@@ -1,6 +1,5 @@
 from mcp.server.fastmcp import FastMCP
 
-
 # Create a FastMCP object
 mcp = FastMCP(
     name="generative-saleman-calculator",
@@ -13,7 +12,7 @@ mcp = FastMCP(
 def add_numbers(a: float, b: float, precision: int = 4) -> float:
     """
     Add two numbers together.
-    
+
     Args:
         a (float): The first number.
         b (float): The second number.
@@ -32,11 +31,12 @@ def add_numbers(a: float, b: float, precision: int = 4) -> float:
     """
     return round(a + b, precision)
 
+
 @mcp.tool(name="Subtraction", description="Subtract two numbers")
 def subtract_numbers(a: float, b: float, precision: int = 4) -> float:
     """
-    Subtract two numbers.
-    
+    Subtract two numbers. returning a - b.
+
     Args:
         a (float): The first number.
         b (float): The second number.
@@ -55,11 +55,12 @@ def subtract_numbers(a: float, b: float, precision: int = 4) -> float:
     """
     return round(a - b, precision)
 
+
 @mcp.tool(name="Multiplication", description="Multiply two numbers")
 def multiply_numbers(a: float, b: float, precision: int = 4) -> float:
     """
     Multiply two numbers.
-    
+
     Args:
         a (float): The first number.
         b (float): The second number.
