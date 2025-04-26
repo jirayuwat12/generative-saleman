@@ -20,7 +20,7 @@ async def generate_chat(
     :return: The response from the agent.
     :rtype: list[BaseMessage]
     """
-    async with MultiServerMCPClient(mcp_servers_config) as client:
+    async with MultiServerMCPClient(mcp_servers_config) as client:  # type: ignore
         agent = create_react_agent(llm_model, client.get_tools())
         response = await agent.ainvoke(
             {
