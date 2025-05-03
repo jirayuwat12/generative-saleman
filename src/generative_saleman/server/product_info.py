@@ -20,7 +20,7 @@ mcp = FastMCP(
     version="0.0.1",
 )
 
-@mcp.resource("supabase:/available_products")
+@mcp.tool()
 def get_available_products() -> list[str]:
     """
     Get the available products from the database.
@@ -65,7 +65,7 @@ def get_product_price(product_name: str) -> float | None:
     # Query the product price from the database
     response = supabase.table("products")\
         .select("price")\
-        .eq("name", product_name)\
+        .eq("name", product_name.lower())\
         .execute()
     if response.data:
         return response.data[0]["price"]
@@ -94,7 +94,7 @@ def is_selling_product(product_name: str) -> bool:
     # Query the product price from the database
     response = supabase.table("products")\
         .select("price")\
-        .eq("name", product_name)\
+        .eq("name", product_name.lower())\
         .gt("amount", 0)\
         .execute()
 
