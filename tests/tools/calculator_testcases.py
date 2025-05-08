@@ -28,12 +28,12 @@ SUBSTRACTION_TEST_CASES = [
         "content": "3.3333"
     },
     {
-        "human_input": "5.6789 - 2.3456, precision=2",
+        "human_input": "5.6789 - 2.3456 with the precision=2",
         "tool_name": "Subtraction",
         "content": "3.33"
     },
     {
-        "human_input": "5.6789 - 2.3456, precision=0",
+        "human_input": "5.6789 - 2.3456 with the precision=0",
         "tool_name": "Subtraction",
         "content": "3"
     }
@@ -51,7 +51,7 @@ MULTIPLICATION_TEST_CASES = [
         "content": "2.8959"
     },
     {
-        "human_input": "1.23456 * 2.34567, precision=2",
+        "human_input": "1.23456 * 2.34567 with the precision=2",
         "tool_name": "Multiplication",
         "content": "2.9"
     },
