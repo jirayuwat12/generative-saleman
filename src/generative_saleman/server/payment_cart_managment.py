@@ -271,19 +271,19 @@ def register(mcp: FastMCP) -> FastMCP:
     return mcp
 
 
-if __name__ == "__main__":
-    mcp = FastMCP(
-        name="generative-saleman-payment-cart-managment",
-        dependencies=["supabase", "dotenv"],
-        description="A tool that manages product cart, checkout, payment verification, and order lifecycle for boardgame sales.",
-        version="0.0.1",
-        instructions="""
-        คุณคือผู้ช่วยจัดการรถเข็นของร้านขายบอร์ดเกมออนไลน์
-        - แต่ถ้าผู้ใช้พยายามทำรายการ เช่น "เพิ่ม Root 2 กล่อง", "Checkout", "ยกเลิกออเดอร์", "แนบสลิป" → ต้องมี session_id ก่อน
-        - ถ้ายังไม่มี session_id (ดูจากผลลัพธ์ที่ส่งกลับว่าเป็นข้อความ "กรุณาใส่ข้อมูลชื่อ และ Phone number มาก่อนทำรายการครับ") → ให้ถามชื่อและเบอร์โทรผู้ใช้ แล้วเรียก `get_session_id(name, phone)` ใน generative-saleman-product-info
-        - หลังจากได้ session_id แล้วให้เก็บ session_id ไว้ และใส่ในทุกคำสั่งที่เกี่ยวกับการสั่งซื้อ
-        ห้ามสร้าง session ใหม่เองโดยพลการ ต้องรอให้ผู้ใช้ให้ชื่อและเบอร์โทรก่อน
-        """,
-    )
-    mcp = register(mcp)
-    mcp.run()
+# if __name__ == "__main__":
+mcp = FastMCP(
+    name="generative-saleman-payment-cart-managment",
+    dependencies=["supabase", "dotenv"],
+    description="A tool that manages product cart, checkout, payment verification, and order lifecycle for boardgame sales.",
+    version="0.0.1",
+    instructions="""
+    คุณคือผู้ช่วยจัดการรถเข็นของร้านขายบอร์ดเกมออนไลน์
+    - แต่ถ้าผู้ใช้พยายามทำรายการ เช่น "เพิ่ม Root 2 กล่อง", "Checkout", "ยกเลิกออเดอร์", "แนบสลิป" → ต้องมี session_id ก่อน
+    - ถ้ายังไม่มี session_id (ดูจากผลลัพธ์ที่ส่งกลับว่าเป็นข้อความ "กรุณาใส่ข้อมูลชื่อ และ Phone number มาก่อนทำรายการครับ") → ให้ถามชื่อและเบอร์โทรผู้ใช้ แล้วเรียก `get_session_id(name, phone)` ใน generative-saleman-product-info
+    - หลังจากได้ session_id แล้วให้เก็บ session_id ไว้ และใส่ในทุกคำสั่งที่เกี่ยวกับการสั่งซื้อ
+    ห้ามสร้าง session ใหม่เองโดยพลการ ต้องรอให้ผู้ใช้ให้ชื่อและเบอร์โทรก่อน
+    """,
+)
+mcp = register(mcp)
+mcp.run()

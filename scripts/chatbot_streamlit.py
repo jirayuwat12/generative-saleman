@@ -54,8 +54,9 @@ instance_to_role_name = {
 for msg in st.session_state["messages"]:
     for msg_type, role_name in instance_to_role_name.items():
         if isinstance(msg, msg_type):
-            st.chat_message(role_name).markdown(msg.content)
-            break
+            if msg.content.strip() != "":
+                st.chat_message(role_name).markdown(msg.content)
+                break
     # else:
     # st.chat_message("unknown").markdown(msg.content)
 

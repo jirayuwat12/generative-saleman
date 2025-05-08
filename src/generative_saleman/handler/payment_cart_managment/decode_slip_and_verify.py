@@ -33,12 +33,12 @@ def decode_slip_and_verify(supabase: Client, full_save_path: str, session_id: in
 
     try:
         response = verify_slip(ref_nbr=ref_nbr, amount=str(order.total_amount))
-        if response["status"] == "success":
+        if response["success"]:
             update_order_qr_reference(supabase, order.id, ref_nbr)
         return {
             "ref_nbr": ref_nbr,
-            "status": response["status"],
-            "message": response["message"],
+            "status": "success" if response["success"] else "error",
+            "message": "Slip verification Success." if response["success"] else "Slip verification Success.",
         }
     except Exception as e:
         return {"ref_nbr": ref_nbr, "status": "error", "message": str(e)}

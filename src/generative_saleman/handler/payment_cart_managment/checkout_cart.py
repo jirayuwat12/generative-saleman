@@ -14,7 +14,7 @@ def checkout_cart(supabase: Client, session_id: int | None) -> dict:
     user_id = res
     # 2. ดึง order ล่าสุด
     order = get_lastest_order_by_user_id(supabase, user_id)
-    if (order is None) or (order.status != "waiting"):
+    if (order is None) or (order.status not in ["waiting", "pending"]):
         return {"status": "fail", "detail": "ไม่มีตะกร้าที่พร้อมจะชำระ กรุณาเพิ่มสินค้าก่อน"}
 
     # 3. ตรวจสอบว่าสินค้าในตะกร้ามีจริงไหม
@@ -38,5 +38,5 @@ def checkout_cart(supabase: Client, session_id: int | None) -> dict:
         "detail": "สร้างรายการคำสั่งซื้อเรียบร้อย กรุณาชำระเงินตามรายการด้านล่าง",
         "cart_summary": summary,
         "qr_base64": qr_base64,
-        "payment_info": f"ชำระเงินจำนวน {order.total_amount:.2f} บาท ผ่าน QR ด้านล่าง เบอร์ PromptPay {phone_nbr}",
+        "payment_info": f"ชำระเงินจำนวน {order.total_amount:.2f} บาท ผ่าน QR ด้านล่าง เบอร์ PromptPay {phone_nbr} ชื่อบัญชี ศุภฤกษ์ คงประพันธ์",
     }
