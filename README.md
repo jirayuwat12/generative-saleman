@@ -25,7 +25,9 @@ mcp_servers:
   product-info:
     command: "python"
     args: ["./src/generative-saleman/server/product_info.py"]
-
+  payment-cart-managment:
+    command: "python"
+    args: ["./src/generative-saleman/server/payment_cart_managment.py"]
 system_prompt: |
     You are a helpful assistant that can answer questions about product information using the tools provided to you.
     For critical questions where tools are not available, please respond with:

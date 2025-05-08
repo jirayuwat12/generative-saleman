@@ -5,11 +5,15 @@ openai_config:
 mcp_servers:
   product-info:
     command: "python"
-    args: ["/Users/jirayuwat/Desktop/generative-saleman/src/generative_saleman/server/product_info.py"]
+    args: ["/Users/pluem/Desktop/Code/generative-saleman/src/generative_saleman/server/product_info.py"]
     transport: "stdio"
   calculator:
     command: "python"
     args: ["/Users/jirayuwat/Desktop/generative-saleman/src/generative_saleman/server/calculator.py"]
+    transport: "stdio"
+  payment-cart-managment:
+    command: "python"
+    args: ["/Users/pluem/Desktop/Code/generative-saleman/src/generative_saleman/server/payment_cart_managment.py"]
     transport: "stdio"
 
 streamlit_title: 💰 Generative Saleman.
