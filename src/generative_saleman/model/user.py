@@ -1,10 +1,11 @@
-from pydantic import BaseModel, EmailStr
+from datetime import datetime
+from pydantic import BaseModel
 from typing import Optional
 
 
 class UserBase(BaseModel):
     name: str
-    email: EmailStr
+    phone: str
 
 
 class UserCreate(UserBase):
@@ -13,11 +14,11 @@ class UserCreate(UserBase):
 
 class User(UserBase):
     id: int
+    email: str | None
     is_active: Optional[bool] = True
     address: Optional[str] = None
-    create_at: Optional[str] = None
-    update_at: Optional[str] = None
+    created_at: datetime
 
     class Config:
-        orm_mode = True
+        from_attributes = True
         arbitrary_types_allowed = True

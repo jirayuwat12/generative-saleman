@@ -1,8 +1,9 @@
 import requests
-from src.generative_saleman.config import QR_VERIFY_TOKEN
+from generative_saleman.config import QR_VERIFY_TOKEN
 import base64
 from io import BytesIO
 from PIL import Image
+
 from pyzbar.pyzbar import decode
 
 
