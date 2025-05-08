@@ -47,7 +47,8 @@ def add_product_to_cart(supabase: Client, product_name: str, quantity: int, sess
 
     # 4. อัปเดตยอดรวม
     total_price = product.price * quantity
-    update_order(supabase, order.id, {"total_amount": total_price})
+    new_total_amount = order.total_amount + total_price
+    update_order(supabase, order.id, {"total_amount": new_total_amount})
 
     # 5. หักจำนวนสินค้าออกจาก stock
     new_amount = product.amount - quantity
