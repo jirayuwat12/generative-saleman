@@ -38,7 +38,7 @@ def decode_slip_and_verify(supabase: Client, full_save_path: str, session_id: in
         return {
             "ref_nbr": ref_nbr,
             "status": "success" if response["success"] else "error",
-            "message": "Slip verification Success." if response["success"] else "Slip verification Success.",
+            "message": "Slip verification Success." if response["success"] else "Slip verification failed.",
         }
     except Exception as e:
         return {"ref_nbr": ref_nbr, "status": "error", "message": str(e)}
