@@ -1,0 +1,9 @@
+openai_config:
+  openai_api_key:  <YOUR_OPENAI_API_KEY>
+  model_name: "gpt-4o-mini-2024-07-18"
+
+mcp_servers:
+  calculator:
+    command: "python"
+    args: ["/Users/jirayuwat/Desktop/generative-saleman/src/generative_saleman/server/calculator.py"]
+    transport: "stdio"

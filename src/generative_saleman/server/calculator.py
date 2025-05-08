@@ -29,7 +29,7 @@ def add_numbers(a: float, b: float, precision: int = 4) -> float:
         >>> add_numbers(1.23456, 2.34567, precision=0)
         4
     """
-    return round(a + b, precision)
+    return round(a + b, precision if precision > 0 else None)
 
 
 @mcp.tool(name="Subtraction", description="Subtract two numbers")
@@ -53,7 +53,7 @@ def subtract_numbers(a: float, b: float, precision: int = 4) -> float:
         >>> subtract_numbers(5.6789, 2.3456, precision=0)
         3
     """
-    return round(a - b, precision)
+    return round(a - b, precision if precision > 0 else None)
 
 
 @mcp.tool(name="Multiplication", description="Multiply two numbers")
@@ -77,7 +77,7 @@ def multiply_numbers(a: float, b: float, precision: int = 4) -> float:
         >>> multiply_numbers(1.1111, 2, precision=0)
         2
     """
-    return round(a * b, precision)
+    return round(a * b, precision if precision > 0 else None)
 
 
 if __name__ == "__main__":
