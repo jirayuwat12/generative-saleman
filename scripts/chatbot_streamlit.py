@@ -61,51 +61,35 @@ for msg in st.session_state["messages"]:
     # st.chat_message("unknown").markdown(msg.content)
 
 # Toggle mode
-input_mode = st.toggle("📝 สลับระหว่างพิมพ์ข้อความ / แนบรูปภาพ", value=True)  # True = ข้อความ, False = รูป
+uploaded_file = st.sidebar.file_uploader("แนบรูปภาพสลิป (png, jpg, jpeg)", type=["png", "jpg", "jpeg"])
+prompt = st.chat_input(placeholder=config_yaml["streamlit_input_placeholder"])
 
-if input_mode:
-    # โหมดข้อความ
-    prompt = st.chat_input(placeholder=config_yaml["streamlit_input_placeholder"])
-    if prompt:
-        st.session_state["messages"].append(HumanMessage(prompt))
-        st.chat_message("user").write(prompt)
+if uploaded_file:
+    # 💾 เซฟไฟล์ลงเครื่อง
+    file_bytes = uploaded_file.read()
+    upload_dir = "./uploaded_slips"
+    os.makedirs(upload_dir, exist_ok=True)
+    file_ext = uploaded_file.name.split(".")[-1]
+    file_name = f"slip_{uuid.uuid4().hex}.{file_ext}"
+    file_path = os.path.join(upload_dir, file_name)
+    with open(file_path, "wb") as f:
+        f.write(file_bytes)
 
-        with st.chat_message("assistant"):
-            loop = asyncio.new_event_loop()
-            asyncio.set_event_loop(loop)
-            response = loop.run_until_complete(
-                generate_chat(model, config_yaml["mcp_servers"], st.session_state["messages"])
-            )
-            st.session_state["messages"] = response
-            st.write(response[-1].content)
-else:
-    # โหมดรูปภาพ
-    uploaded_file = st.file_uploader("📷 แนบรูปภาพสลิป (png, jpg, jpeg)", type=["png", "jpg", "jpeg"])
-    if uploaded_file:
-        file_bytes = uploaded_file.read()
+    # แสดงในแชท
+    file_prompt = f"จ่ายเงินด้วยไฟล์ภาพ: {file_path}"
+    st.session_state["messages"].append(AIMessage(file_prompt))
+    st.chat_message("user").write(file_prompt)
 
-        # 🔐 สร้าง path สำหรับเซฟรูป
-        upload_dir = "./uploaded_slips"
-        os.makedirs(upload_dir, exist_ok=True)
-        file_ext = uploaded_file.name.split(".")[-1]
-        file_name = f"slip_{uuid.uuid4().hex}.{file_ext}"
-        file_path = os.path.join(upload_dir, file_name)
+if prompt:
+    st.session_state["messages"].append(HumanMessage(prompt))
+    st.chat_message("user").write(prompt)
 
-        # 💾 เซฟรูปลงเครื่อง
-        with open(file_path, "wb") as f:
-            f.write(file_bytes)
-
-        # แสดงในแชท
-        st.chat_message("user").image(file_bytes, width=300)
-
-        # 📨 ส่ง path เข้า LLM
-        st.session_state["messages"].append(HumanMessage(f"จ่ายเงินด้วยไฟล์ภาพ: <image_path>{file_path}</image_path>"))
-
-        with st.chat_message("assistant"):
-            loop = asyncio.new_event_loop()
-            asyncio.set_event_loop(loop)
-            response = loop.run_until_complete(
-                generate_chat(model, config_yaml["mcp_servers"], st.session_state["messages"])
-            )
-            st.session_state["messages"] = response
-            st.write(response[-1].content)
+if prompt or uploaded_file:
+    with st.chat_message("assistant"):
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        response = loop.run_until_complete(
+            generate_chat(model, config_yaml["mcp_servers"], st.session_state["messages"])
+        )
+        st.session_state["messages"] = response
+        st.write(response[-1].content)
