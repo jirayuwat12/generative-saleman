@@ -2,7 +2,8 @@ import os
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
-load_dotenv("/Users/pluem/Desktop/Code/generative-saleman/.env", override=True)
+load_dotenv("/Users/jirayuwat/Desktop/generative-saleman/.env", override=True)
+# load_dotenv(find_dotenv(), override=True)
 
 # Initialize Supabase client
 SUPABASE_URL = os.getenv("SUPABASE_URL")

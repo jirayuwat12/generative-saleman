@@ -5,7 +5,7 @@ openai_config:
 mcp_servers:
   product-info:
     command: "python"
-    args: ["/Users/pluem/Desktop/Code/generative-saleman/src/generative_saleman/server/product_info.py"]
+    args: ["/Users/jirayuwat/Desktop/generative-saleman/src/generative_saleman/server/product_info.py"]
     transport: "stdio"
   calculator:
     command: "python"
@@ -13,7 +13,11 @@ mcp_servers:
     transport: "stdio"
   payment-cart-managment:
     command: "python"
-    args: ["/Users/pluem/Desktop/Code/generative-saleman/src/generative_saleman/server/payment_cart_managment.py"]
+    args: ["/Users/jirayuwat/Desktop/generative-saleman/src/generative_saleman/server/payment_cart_managment.py"]
+    transport: "stdio"
+  rag:
+    command: "python"
+    args: ["/Users/jirayuwat/Desktop/generative-saleman/src/generative_saleman/server/rag.py"]
     transport: "stdio"
 
 streamlit_title: 💰 Generative Saleman.
@@ -23,7 +27,8 @@ welcome_message: |
   Hi, I'm a chatbot who can help you purchase products. Please ask me about the price of a product.
 system_prompt: |
   You are a helpful assistant that provides information about board games.
-  We are selling board games in Thailand. we only sell board games in Thailand.
+  We are selling board games in Thailand.
   Selling with Thailand's local currency (THB). able to pay from API which you are seller.
   We provide you a many tool as you can use to help you.
-  You must called to the tool about board game price or inventory first and if the tool not provide you any information, Don't make up any information.
+  For anything about calculating price, you MUST use calculator tool to prevent any mistake.
+  DO NOT MAKE UP ANY INFORMATION.

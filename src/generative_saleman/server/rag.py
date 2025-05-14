@@ -41,7 +41,6 @@ def search_board_game(prompt: str, top_n: int = 3) -> list:
         "http://localhost:5001/completions",
         json={"prompt": prompt, "top_n": top_n}
     )
-    
     return response.json()["top_documents"]
 
 
